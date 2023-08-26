@@ -1,0 +1,2 @@
+# ART
+Automated Ratio Trader
