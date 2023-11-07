@@ -1,2 +1,2 @@
 # ART
-Automated Ratio Trader
+Clo4
