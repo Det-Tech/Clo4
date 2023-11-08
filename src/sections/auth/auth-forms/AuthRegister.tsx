@@ -38,6 +38,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const Google = '/assets/images/icons/google.svg';
+const Twitter = '/assets/images/icons/twitter.svg';
 
 // ============================|| SIGN UP ||============================ //
 
@@ -363,11 +364,21 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
         <Button
           variant="outlined"
           color="secondary"
-          fullWidth={!matchDownSM}
+          fullWidth={true}
+          sx={{ my: 2 }}
           startIcon={<NextImage src={Google} alt="Twitter" width={16} height={16} />}
           onClick={() => signIn('google', { redirect: false })}
         >
-          {!matchDownSM && 'Google'}
+          {'Google'}
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          fullWidth={true}
+          startIcon={<NextImage src={Twitter} alt="Twitter" width={16} height={16} />}
+          onClick={() => signIn('twitter', { redirect: false })}
+        >
+          {'Twitter'}
         </Button>
       </Box>
     </>

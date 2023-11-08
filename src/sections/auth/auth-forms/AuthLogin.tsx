@@ -183,19 +183,26 @@ const AuthLogin = ({ providers, csrfToken }: any) => {
                 </Grid>
               )}
               <Grid item xs={12}>
-                <AnimateButton>
-                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
-                    Log In
-                  </Button>
-                </AnimateButton>
-              </Grid>
-              <Grid item xs={12}>
                 <NextLink href={session ? '/auth/forgot-password' : '/forgot-password'} passHref legacyBehavior>
                   <Link variant="h6" color="text.primary">
                     Forgot Password?
                   </Link>
                 </NextLink>
               </Grid>
+              <Grid item xs={12} md={6}>
+                <AnimateButton>
+                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                    Log In
+                  </Button>
+                </AnimateButton>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <AnimateButton>
+                  <Button disableElevation fullWidth size="large" onClick={()=>router.push("/signup")} variant="contained" color="success">
+                    Sign up
+                  </Button>
+                </AnimateButton>
+              </Grid>              
             </Grid>
           </form>
         )}

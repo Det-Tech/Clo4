@@ -7,6 +7,7 @@ import { Box, Grid, Hidden, useTheme } from '@mui/material';
 import AuthCard from './AuthCard';
 import AuthSideBarWrapper from './AuthSideBarWrapper';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import IconButton from 'components/@extended/IconButton';
 import Drawer from '@mui/material/Drawer';
 
@@ -40,11 +41,20 @@ const AuthWrapper = ({ children }: Props) => {
         <Grid item xs={12}>
           <Grid item xs={12} container justifyContent="center" alignItems="center">
             <Grid item xs={12} sm={4}>
-              <Hidden smDown>
+              <Hidden smDown>                
                 <AuthSideBarWrapper />
               </Hidden>
               <Hidden smUp>
                 <Drawer anchor={'left'} open={openDrawer} onClose={() => toggleSide()}>
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => toggleSide()}
+                    edge="end"
+                    color="secondary"
+                    sx={{ color: 'text.primary', position: "absolute", right: "25px", marginTop:"20px", bgcolor: theme.palette.secondary[300] }}
+                  >
+                    <CloseIcon style={{ color: theme.palette.primary.main }} />
+                  </IconButton>
                   <AuthSideBarWrapper />
                 </Drawer>
               </Hidden>
