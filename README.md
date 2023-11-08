@@ -7,3 +7,6 @@
 
 ## To start with hot reload 
 `npm run dev`
+
+## To Build
+`npm run build`
