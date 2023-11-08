@@ -8,7 +8,7 @@ import Clo4_ABI from './Clo4.json';
 import { useCallback, useEffect, useState } from 'react';
 
 const web3 = new Web3('https://eth-goerli.g.alchemy.com/v2/KqDagOiXKFQ8T_QzPNpKBk1Yn-3Zgtgl');
-const musdContract = new web3.eth.Contract(Clo4_ABI as any[], '0xe6b5639623e0Cc80DEFD618232BE9A5357e9cc7f');
+const musdContract = new web3.eth.Contract(Clo4_ABI as any[], '0xe2B4A37D165Aec2a0626F34EAc72cD09B6A31F36');
 
 export const useCurrentBalance = () => {
   const { data: session } = useSession();

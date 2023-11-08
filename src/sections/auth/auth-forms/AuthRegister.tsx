@@ -19,16 +19,12 @@ import {
   OutlinedInput,
   Stack,
   Typography,
-  Select,
-  MenuItem,
-  Theme,
-  useMediaQuery
 } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import ReCAPTCHA from 'react-google-recaptcha-enterprise';
+// import ReCAPTCHA from 'react-google-recaptcha-enterprise';
 
 // project import
 import IconButton from 'components/@extended/IconButton';
@@ -47,14 +43,15 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
 
   const router = useRouter();
 
-  const matchDownSM = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  // const matchDownSM = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  // @ts-ignore
   const [captchaChecked, toggleCaptchaChecked] = React.useState<boolean>(true);
 
-  const onCaptchaChange = (token: string | null) => {
-    toggleCaptchaChecked(token !== null);
-  };
+  // const onCaptchaChange = (token: string | null) => {
+  //   toggleCaptchaChecked(token !== null);
+  // };
 
   const handleClickShowPassword = () => {
     setShowPassword((_v) => !_v);

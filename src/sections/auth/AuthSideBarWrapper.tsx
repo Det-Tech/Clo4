@@ -1,17 +1,13 @@
 // material-ui
-import { Box, Button, CardMedia, Stack, Typography, Link } from '@mui/material';
-import NextLink from 'next/link';
+import { Box, CardMedia, Stack, Typography } from '@mui/material';
 
 // project import
-import { useRouter } from 'next/navigation';
 
 const logo = 'assets/images/logo.png';
-const wipe = 'assets/images/landing/wipe.png';
-
+// 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
 const AuthSideBarWrapper = ({}) => {
-  const router = useRouter();
 
   return (
     <Stack direction="column" justifyContent="space-around" 
