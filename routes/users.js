@@ -35,6 +35,8 @@ router.post('/register', async(req, res) => {
 
 		res.status(200).json({
 			success: true,
+			_id: newUser._id,
+			email: email,
 			message: "Successfully registered",
 		})
 
@@ -44,9 +46,9 @@ router.post('/register', async(req, res) => {
 
 /* POST User login */
 router.post('/login', (req, res) => {
-	const {username, password} = req.body;
+	const {email, password} = req.body;
 	User.findOne({
-		username: username
+		email: email
 	}, (error, user) => {
 		if (error) return res.status(200).json({
 			success: false,
@@ -73,14 +75,19 @@ router.post('/login', (req, res) => {
 					var token = jwt.sign({
 						id: user._id,
 						email: user.email,
-						username: user.username,
-						customer_id: user?.customer_id,
+						username: user?.username,
+						wallet: user?.wallet,
 						wallet_data: user?.wallet_data
 					}, config.JWT_SECRET, { expiresIn: '1h' });
-					res.header('Authorization', `Bearer ${token}`);
+					res.header('Authorization', `${token}`);
 					res.cookie('token', token).status(200).json({
 						success: true,
 						message: "Successfully logined",
+						username: user?.username,
+						id: user._id,
+						email: user.email,
+						wallet: user?.wallet,
+						wallet_data: user?.wallet_data,
 						token
 					})
 
@@ -92,7 +99,7 @@ router.post('/login', (req, res) => {
 				}
 			});
 		} else {
-			res.status(200).json({
+			res.status(500).json({
 				success: false,
 				message: "No user found",
 			})
