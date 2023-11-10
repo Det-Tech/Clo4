@@ -157,5 +157,9 @@
   "my-wallet": "My wallet",
   "testing-milestones": "Testing milestones",
   "transactions": "All transactions",
-  "rewards": "Rewards"
+  "rewards": "Rewards",
+  "portfolio": "Portfolio",
+  "account": "Account",
+  "invest": "Invest",
+  "deposit": "Deposit"
 }
