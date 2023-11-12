@@ -48,6 +48,9 @@ const NavItem = ({ item, level }: Props) => {
     component: forwardRef((props, ref) => (
       <Box
         onClick={() => {
+          dispatch(activeItem({ openItem: [item.id] }));
+          console.log("item: ", item)
+          console.log("openItem: ", openItem)
           if (item.id == 'deposit') {
             dispatch(activeDeposit(true));
           }
@@ -69,27 +72,6 @@ const NavItem = ({ item, level }: Props) => {
   const isSelected = openItem.findIndex((id) => id === item.id) > -1;
 
   const router = useRouter();
-  const { asPath } = router;
-
-  // active menu item on page load
-  useEffect(() => {
-    if (asPath && asPath.includes('my-portfolio')) {
-      if (item.url && item.url.includes('my-portfolio')) {
-        dispatch(activeItem({ openItem: [item.id] }));
-      }
-    }
-
-    if (asPath && asPath.includes('projects')) {
-      if (item.url && item.url.includes('projects')) {
-        dispatch(activeItem({ openItem: [item.id] }));
-      }
-    }
-
-    if (asPath === item.url) {
-      dispatch(activeItem({ openItem: [item.id] }));
-    }
-    // eslint-disable-next-line
-  }, [asPath]);
 
   const textColor = theme.palette.mode === ThemeMode.DARK ? 'grey.400' : 'text.primary';
   const iconSelectedColor = '#FEFEFE';
