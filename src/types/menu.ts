@@ -35,4 +35,5 @@ export type MenuProps = {
   componentDrawerOpen: boolean;
   menu: NavItemType;
   error: null;
+  activeDeposit: boolean;
 };

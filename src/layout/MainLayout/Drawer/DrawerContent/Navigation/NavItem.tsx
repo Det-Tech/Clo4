@@ -6,13 +6,13 @@ import NextLink from 'next/link';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Chip, Link, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Chip, Link, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery, Box } from '@mui/material';
 
 // project import
 import Dot from 'components/@extended/Dot';
 import useConfig from 'hooks/useConfig';
 import { dispatch, useSelector } from 'store';
-import { activeItem, openDrawer } from 'store/reducers/menu';
+import { activeDeposit, activeItem, openDrawer } from 'store/reducers/menu';
 
 // types
 import { LinkTarget, NavItemType } from 'types/menu';
@@ -46,9 +46,17 @@ const NavItem = ({ item, level }: Props) => {
     target?: LinkTarget;
   } = {
     component: forwardRef((props, ref) => (
-      <NextLink href={item.url!} passHref legacyBehavior ref={ref}>
-        <Link {...props} target={itemTarget} />
-      </NextLink>
+      <Box
+        onClick={() => {
+          if (item.id == 'deposit') {
+            dispatch(activeDeposit(true));
+          }
+        }}
+      >
+        <NextLink href={item.url!} passHref legacyBehavior ref={ref}>
+          <Link {...props} target={itemTarget} />
+        </NextLink>
+      </Box>
     ))
   };
   if (item?.external) {

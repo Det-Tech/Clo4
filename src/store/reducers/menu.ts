@@ -14,7 +14,8 @@ const initialState: MenuProps = {
   drawerOpen: false,
   componentDrawerOpen: true,
   menu: {},
-  error: null
+  error: null,
+  activeDeposit: false
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -50,6 +51,10 @@ const menu = createSlice({
 
     hasError(state, action) {
       state.error = action.payload;
+    },
+
+    activeDeposit(state, action) {
+      state.activeDeposit = action.payload;
     }
   },
 
@@ -62,4 +67,4 @@ const menu = createSlice({
 
 export default menu.reducer;
 
-export const { activeItem, activeComponent, openDrawer, openComponentDrawer, activeID } = menu.actions;
+export const { activeItem, activeComponent, openDrawer, openComponentDrawer, activeDeposit, activeID } = menu.actions;

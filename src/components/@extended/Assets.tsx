@@ -1,8 +1,7 @@
 // material-ui
-import { Stack, Typography, useTheme } from '@mui/material';
+import { CardMedia, Stack, Typography, useTheme } from '@mui/material';
 
 // assets
-import { BellOutlined } from '@ant-design/icons';
 import * as antColors from '@ant-design/colors';
 import { ThemeMode } from 'types/config';
 
@@ -20,12 +19,11 @@ const Assets = () => {
       py={1}
       borderRadius={1}
     >
-      <BellOutlined
-        style={{ color: theme.palette.mode === ThemeMode.DARK ? antColors.blue[3] : 'white', fontSize: 18, paddingRight: 16 }}
-      />
-      <Stack direction={"row"} justifyContent={"space-between"} width={"100%"}>
+      <CardMedia component="img" image={'assets/images/crypto/bitcoin.png'} sx={{ width: '24px', height: '24px', aspectRatio: 1 }} />
+
+      <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
         <Typography fontWeight={800} color={theme.palette.mode === ThemeMode.DARK ? antColors.blue[3] : 'white'}>
-          {'wBitcoin'}
+          &nbsp; { 'wBitcoin'}
         </Typography>
         <Typography fontStyle="italic" fontWeight={800} color={theme.palette.mode === ThemeMode.DARK ? antColors.blue[3] : 'white'}>
           {'5.02'}

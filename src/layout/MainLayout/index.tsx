@@ -11,11 +11,12 @@ import Breadcrumbs from 'components/@extended/Breadcrumbs';
 
 import navigation from 'menu-items';
 import useConfig from 'hooks/useConfig';
-import { dispatch } from 'store';
-import { openDrawer } from 'store/reducers/menu';
+import { dispatch, useSelector } from 'store';
+import { activeDeposit, openDrawer } from 'store/reducers/menu';
 
 // types
 import { ThemeMode } from 'types/config';
+import DepositDialog from 'components/dialogs/DepositDialog';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -29,6 +30,8 @@ const MainLayout = ({ children }: Props) => {
   const downLG = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { container, miniDrawer } = useConfig();
+
+  const menuState = useSelector((state) => state.menu);
 
   const isHorizontal = downLG;
 
@@ -75,6 +78,7 @@ const MainLayout = ({ children }: Props) => {
             {children}
           </Box>
         </Container>
+        <DepositDialog open={menuState.activeDeposit} handleClose={()=>{dispatch(activeDeposit(false))}}/>
       </Box>
     </Box>
   );
