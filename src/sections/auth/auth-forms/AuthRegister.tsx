@@ -39,7 +39,6 @@ const Twitter = '/assets/images/icons/twitter.svg';
 // ============================|| SIGN UP ||============================ //
 
 const AuthRegister = ({ providers, csrfToken }: any) => {
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const router = useRouter();
 
@@ -48,10 +47,6 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   // @ts-ignore
   const [captchaChecked, toggleCaptchaChecked] = React.useState<boolean>(true);
-
-  // const onCaptchaChange = (token: string | null) => {
-  //   toggleCaptchaChecked(token !== null);
-  // };
 
   const handleClickShowPassword = () => {
     setShowPassword((_v) => !_v);
@@ -83,8 +78,6 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
           firstName: Yup.string().max(255).required('First name is required'),
           lastName: Yup.string().max(255).required('Last name is required'),
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone number is required'),
-          referralCode: Yup.string(),
           password: Yup.string().max(255).required('Password is required'),
           confirmPassword: Yup.string()
             .max(255)
@@ -92,16 +85,12 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
             .when(['password'], (password, schema) => schema.equals(password, 'The two passwords that you entered do not match!'))
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
-          if (captchaChecked) {
             signIn('signup', {
               redirect: false,
               firstName: values.firstName,
               lastName: values.lastName,
               email: values.email,
-              phoneNumber: values.phoneNumber,
               password: values.password,
-              role: values.role,
-              referralCode: values.referralCode
             }).then((res: any) => {
               if (res?.error) {
                 try {
@@ -119,9 +108,6 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
                 router.push('/verify-email');
               }
             });
-          } else {
-            setErrors({ submit: 'ReCAPTCHA not passed' });
-          }
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
@@ -195,45 +181,6 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
                   )}
                 </Stack>
               </Grid>
-              {/* <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="role-login">Role</InputLabel>
-                  <Select defaultValue="investor" value={values.role} onChange={(ev) => setFieldValue('role', ev.target.value)}>
-                    <MenuItem value="investor" title="Investor">
-                      Investor
-                    </MenuItem>
-                    <MenuItem value="prowner" title="Project Owner">
-                      Project Owner
-                    </MenuItem>
-                  </Select>
-                  {touched.role && errors.role && (
-                    <FormHelperText error id="standard-weight-helper-text-role-login">
-                      {errors.role}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid> */}
-              {/* <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="phonenumber-login">Phone Number</InputLabel>
-                  <OutlinedInput
-                    id="phonenumber-login"
-                    type="text"
-                    value={values.phoneNumber}
-                    name="phoneNumber"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter phone number address"
-                    fullWidth
-                    error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-                  />
-                  {touched.phoneNumber && errors.phoneNumber && (
-                    <FormHelperText error id="standard-weight-helper-text-phonenumber-login">
-                      {errors.phoneNumber}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid> */}
               <Grid item xs={12}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="password-login">Password</InputLabel>
@@ -302,30 +249,6 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
                   )}
                 </Stack>
               </Grid>
-              {/* <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="referralcode-login">Referral Code</InputLabel>
-                  <OutlinedInput
-                    id="referralCode-login"
-                    type="text"
-                    value={values.referralCode}
-                    name="referralCode"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter referral code"
-                    fullWidth
-                    error={Boolean(touched.referralCode && errors.referralCode)}
-                  />
-                  {touched.referralCode && errors.referralCode && (
-                    <FormHelperText error id="standard-weight-helper-text-referralcode-login">
-                      {errors.referralCode}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-              <Grid item xs={12} sx={{ mt: -1 }}>
-                <ReCAPTCHA size="normal" sitekey="6LfVVqknAAAAADD-a4pkt9ZwBybJRddi0liTtyzJ" onChange={onCaptchaChange} />
-              </Grid> */}
               <Grid item xs={12} sx={{ mt: -1 }}>
                 <Typography variant="body2">
                   By Signing up, you agree to our &nbsp;

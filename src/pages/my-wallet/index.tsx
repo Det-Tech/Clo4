@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 // project import
 import Layout from 'layout';
 import Page from 'components/Page';
-import InvestorBalanceCard from 'sections/dashboard/investor/FinancialCard';
+import InvestorBalanceCard from 'sections/dashboard/FinancialCard';
 import InvestorTransferCard from 'sections/my-wallet/investor/TransferCard';
 import InvestorTransactionHistory from 'sections/my-wallet/investor/TransactionHistory';
 import ProjectOwnerBalanceCard from 'sections/my-wallet/project-owner/BalanceCard';
@@ -17,7 +17,6 @@ import ProjectOwnerProjectBalanceCard from 'sections/my-wallet/project-owner/Pro
 import ProjectOwnerTransactionHistory from 'sections/my-wallet/project-owner/TransactionHistory';
 
 // types
-import { UserRole } from 'types/auth';
 
 // ==============================|| My Wallet ||============================== //
 
@@ -27,14 +26,14 @@ const MyWallet = () => {
 
   return (
     <Page title="My Wallet">
-      {session?.token.role === UserRole.INVESTOR && (
+      {(
         <Stack spacing={3}>
           <Grid container justifyContent="stretch" alignItems="stretch">
             <Grid item xs={12} sm={6} px={1} py={1}>
               <InvestorBalanceCard />
             </Grid>
             <Grid item xs={12} sm={6} px={1} py={1}>
-              <InvestorTransferCard walletAddress={session.token.walletAddress} />
+              <InvestorTransferCard walletAddress={session?.token.walletAddress} />
             </Grid>
           </Grid>
           <Stack
@@ -48,7 +47,7 @@ const MyWallet = () => {
           <InvestorTransactionHistory />
         </Stack>
       )}
-      {session?.token.role === UserRole.PROJECT_OWNER && (
+      {(
         <Stack spacing={3}>
           <Box>
             <Grid container justifyContent="stretch" spacing={3}>

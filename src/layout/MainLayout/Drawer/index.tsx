@@ -8,13 +8,17 @@ import { Box, Drawer, Stack, Tooltip, Typography, useMediaQuery } from '@mui/mat
 import DrawerHeader from './DrawerHeader';
 import DrawerContent from './DrawerContent';
 import MiniDrawerStyled from './MiniDrawerStyled';
-import Profile from '../Header/HeaderContent/Profile';
+// import Profile from '../Header/HeaderContent/Profile';
 
 import { DRAWER_WIDTH } from 'config';
 import { dispatch, useSelector } from 'store';
 import { openDrawer } from 'store/reducers/menu';
 import useConfig from 'hooks/useConfig';
 import { ThemeMode } from 'types/config';
+import { useRouter } from 'next/router';
+import { signOut } from 'next-auth/react';
+
+import Logout from './../../../menu-items/icons/Logout';
 
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
@@ -87,6 +91,7 @@ const ThemeSwitcher = () => {
 const MainDrawer = ({ window }: Props) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+  const router = useRouter();
 
   const menu = useSelector((state) => state.menu);
   const { drawerOpen } = menu;
@@ -98,6 +103,15 @@ const MainDrawer = ({ window }: Props) => {
   const drawerContent = useMemo(() => <DrawerContent />, []);
   const drawerHeader = useMemo(() => <DrawerHeader open={drawerOpen} />, [drawerOpen]);
 
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+
+    router.push({
+      pathname: '/signin',
+      query: {}
+    });
+  };
+
   return (
     <Box component="nav" sx={{ flexShrink: { md: 0 }, zIndex: 1200 }} aria-label="mailbox folders">
       {!matchDownMD ? (
@@ -105,7 +119,11 @@ const MainDrawer = ({ window }: Props) => {
           {drawerHeader}
           {drawerContent}
           <ThemeSwitcher />
-          <Profile />
+
+          <Box sx={{ py: 2, px: 5, cursor: 'pointer', display: 'flex', alignContent: 'center' }} onClick={handleLogout}>
+            <Logout />
+            <Box sx={{ pt:0.4}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Sign out'}</Box>
+          </Box>
         </MiniDrawerStyled>
       ) : (
         <Drawer
@@ -117,7 +135,12 @@ const MainDrawer = ({ window }: Props) => {
           sx={{
             display: { xs: 'block', lg: 'none' },
             '& .MuiDrawer-paper': {
+              // '& .MuiPaper-root': {
+              //   borderRadius: "15px",
+              // },
               boxSizing: 'border-box',
+              // borderRadius: "15px",
+              background: "#00A47875",
               width: DRAWER_WIDTH,
               border: 'none',
               backgroundImage: 'none',
@@ -129,7 +152,10 @@ const MainDrawer = ({ window }: Props) => {
           {drawerHeader}
           {drawerContent}
           <ThemeSwitcher />
-          <Profile />
+          <Box sx={{ py: 2, px: 5, cursor: 'pointer', display: 'flex', alignContent: 'center' }} onClick={handleLogout}>
+            <Logout />
+            <Box sx={{ pt:0.4}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Sign out'}</Box>
+          </Box>
         </Drawer>
       )}
     </Box>

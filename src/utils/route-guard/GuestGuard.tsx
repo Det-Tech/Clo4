@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react';
 import { APP_DEFAULT_PATH } from 'config';
 
 // types
-import { GuardProps, UserRole } from 'types/auth';
+import { GuardProps } from 'types/auth';
 import Loader from 'components/Loader';
 
 // ==============================|| GUEST GUARD ||============================== //
@@ -25,9 +25,7 @@ const GuestGuard = ({ children }: GuardProps) => {
       if (json.protected) {
         let RedirectPath = router.query.from
           ? router.query.from
-          : session?.token.role === UserRole.ADMIN
-          ? '/admin/dashboard/'
-          : APP_DEFAULT_PATH;
+          : APP_DEFAULT_PATH //'/admin/dashboard/' // APP_DEFAULT_PATH;
         router.push({
           pathname: RedirectPath as string,
           query: {}

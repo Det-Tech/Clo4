@@ -36,9 +36,9 @@ const SubmitCard = (props: Props) => {
 
   const handleSubmit = () => {
     setSubmitting(true);
-    axios.defaults.headers.common = { Authorization: `bearer ${session?.token.accessToken as string}` };
+    axios.defaults.headers.common = { Authorization: `${session?.token.accessToken as string}` };
     axios
-      .post(`/api/v1/project/${props.data._id}/submit`, { allowance: newStatus })
+      .post(`/api/project/${props.data._id}/submit`, { allowance: newStatus })
       .then(() => {
         setSubmitting(false);
         enqueueSnackbar('Project submitted successfully.', {

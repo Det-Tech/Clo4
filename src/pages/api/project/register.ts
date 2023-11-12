@@ -1,13 +1,12 @@
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { UserRole } from 'types/auth';
 import axios from 'utils/axios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await await getSession({ req });
 
   if (session && session.token.accessToken) {
-    if (session.token.role === UserRole.PROJECT_OWNER) {
+    
       console.log(req.body);
       const formData = new FormData();
       formData.append('projectImage', req.body.projectImage);
@@ -24,9 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Content-Type': 'multipart/form-data'
         }
       };
-      axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
+      axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
 
-      const response = await axios.post(`/api/v1/project/register`, formData, config).catch((err) => {
+      const response = await axios.post(`/api/project/register`, formData, config).catch((err) => {
         // console.log(err);
         res.status(500).json(err);
       });
@@ -34,7 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (response) {
         res.status(200).json(response);
       }
-    }
   } else {
     res.status(404).send({ error: 'No permission' });
   }

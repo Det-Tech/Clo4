@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 // material-ui
 import { ChipProps } from '@mui/material';
 
-import { UserRole } from './auth';
 import { GenericCardProps } from './root';
 
 // ==============================|| MENU TYPES  ||============================== //
@@ -24,7 +23,6 @@ export type NavItemType = {
   title?: ReactNode | string;
   type?: string;
   url?: string | undefined;
-  roles?: UserRole[];
 };
 
 export type LinkTarget = '_blank' | '_self' | '_parent' | '_top';

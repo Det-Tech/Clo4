@@ -15,7 +15,6 @@ import FinancialReportCard from 'sections/my-portfolio/FinancialReportCard';
 import MyListings from 'sections/my-portfolio/MyListings';
 import Image from 'next/image';
 // types
-import { UserRole } from 'types/auth';
 
 // ==============================|| My Portfolio ||============================== //
 
@@ -85,7 +84,7 @@ const MyPortfolio = () => {
           </Paper>
         </Box>
       )}
-      {!isLoading && session && kycStatus === 2 && session.token.role === UserRole.INVESTOR && (
+      {!isLoading && session && kycStatus === 2 && (
         <Grid container spacing={4.5}>
           <Grid item xs={12}>
             <Grid container spacing={2}>
@@ -113,7 +112,7 @@ const MyPortfolio = () => {
           </Grid>
         </Grid>
       )}
-      {!isLoading && session && kycStatus === 2 && session.token.role === UserRole.PROJECT_OWNER && (
+      {!isLoading && session && kycStatus === 2 && (
         <Box width="max-content" mx="auto" my={18}>
           <Paper>
             <Stack mt={6} spacing={3} alignItems="center" pt={6} pb={4} px={8}>

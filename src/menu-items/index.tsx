@@ -3,18 +3,16 @@ import { FormattedMessage } from 'react-intl';
 
 // types
 import { NavItemType } from 'types/menu';
-import { UserRole } from 'types/auth';
 
 // assets
 import Dashboard from './icons/Dashboard';
 import Help from './icons/Help';
 import Portfolio from './icons/Portfolio';
 import Project from './icons/Project';
-import Reward from './icons/Reward';
+// import Reward from './icons/Reward';
 import Transaction from './icons/Transaction';
 import Wallet from './icons/Wallet';
-
-import { DashboardOutlined, TeamOutlined, FileProtectOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import SettingOutlined from './icons/SettingOutlined';
 
 // ==============================|| MENU ITEMS - COMPONENTS ||============================== //
 
@@ -26,61 +24,39 @@ const menuItems: NavItemType[] = [
     title: <FormattedMessage id="dashboard" />,
     type: 'item',
     url: '/dashboard',
-    roles: [UserRole.INVESTOR, UserRole.PROJECT_OWNER]
   },
   {
-    id: 'my-portfolio',
+    id: 'portfolio',
     icon: Portfolio,
-    search: 'my-portfolio',
-    title: <FormattedMessage id="my-portfolio" />,
+    search: 'portfolio',
+    title: <FormattedMessage id="portfolio" />,
     type: 'item',
-    url: '/my-portfolio',
-    roles: [UserRole.INVESTOR, UserRole.PROJECT_OWNER]
+    url: '/',
   },
   {
-    id: 'my-wallet',
+    id: 'account',
     icon: Wallet,
-    search: 'my-wallet',
-    title: <FormattedMessage id="my-wallet" />,
+    search: 'account',
+    title: <FormattedMessage id="account" />,
     type: 'item',
-    url: '/my-wallet',
-    roles: [UserRole.INVESTOR, UserRole.PROJECT_OWNER]
+    url: '/',
   },
+
   {
-    id: 'transactions',
+    id: 'invest',
     icon: Transaction,
-    search: 'transactions',
-    title: <FormattedMessage id="transactions" />,
+    search: 'invest',
+    title: <FormattedMessage id="invest" />,
     type: 'item',
-    url: '/transactions',
-    roles: [UserRole.INVESTOR]
+    url: '/',
   },
   {
-    id: 'projects',
+    id: 'deposit',
     icon: Project,
-    search: 'projects',
-    title: <FormattedMessage id="projects" />,
+    search: 'deposit',
+    title: <FormattedMessage id="deposit" />,
     type: 'item',
-    url: '/projects',
-    roles: [UserRole.INVESTOR, UserRole.PROJECT_OWNER]
-  },
-  {
-    id: 'project-transactions',
-    icon: Transaction,
-    search: 'project-transactions',
-    title: <FormattedMessage id="project-transactions" />,
-    type: 'item',
-    url: '/project-transactions',
-    roles: [UserRole.PROJECT_OWNER]
-  },
-  {
-    id: 'rewards',
-    icon: Reward,
-    search: 'rewards',
-    title: <FormattedMessage id="rewards" />,
-    type: 'item',
-    url: '/rewards',
-    roles: [UserRole.INVESTOR]
+    url: '/',
   },
   {
     id: 'help',
@@ -89,98 +65,87 @@ const menuItems: NavItemType[] = [
     title: <FormattedMessage id="help" />,
     type: 'item',
     url: '/help',
-    roles: [UserRole.INVESTOR]
   },
-  {
-    id: 'dashboard',
-    icon: Dashboard,
-    search: 'dashboard',
-    title: <FormattedMessage id="dashboard" />,
-    type: 'item',
-    url: '/admin/dashboard',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'investors',
-    icon: TeamOutlined,
-    search: 'investors',
-    title: <FormattedMessage id="investors" />,
-    type: 'item',
-    url: '/admin/investors',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'project-owners',
-    icon: UsergroupAddOutlined,
-    search: 'project-owners',
-    title: <FormattedMessage id="project-owners" />,
-    type: 'item',
-    url: '/admin/project-owners',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'projects',
-    icon: Project,
-    search: 'projects',
-    title: <FormattedMessage id="projects" />,
-    type: 'item',
-    url: '/admin/projects',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'kyc',
-    icon: DashboardOutlined,
-    search: 'kyc',
-    title: <FormattedMessage id="kyc" />,
-    type: 'item',
-    url: '/admin/kyc',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'financial-transactions',
-    icon: Transaction,
-    search: 'financial-transactions',
-    title: <FormattedMessage id="financial-transactions" />,
-    type: 'item',
-    url: '/admin/financial-transactions',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'wallet-transactions',
-    icon: Wallet,
-    search: 'wallet-transactions',
-    title: <FormattedMessage id="wallet-transactions" />,
-    type: 'item',
-    url: '/admin/wallet-transactions',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'project-transactions',
-    icon: FileProtectOutlined,
-    search: 'project-transactions',
-    title: <FormattedMessage id="project-transactions" />,
-    type: 'item',
-    url: '/admin/project-transactions',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'rewards',
-    icon: Reward,
-    search: 'rewards',
-    title: <FormattedMessage id="rewards" />,
-    type: 'item',
-    url: '/admin/rewards',
-    roles: [UserRole.ADMIN]
-  },
-  {
-    id: 'help',
-    icon: Help,
-    search: 'help',
-    title: <FormattedMessage id="help" />,
-    type: 'item',
-    url: '/admin/help',
-    roles: [UserRole.ADMIN]
-  }
+  // {
+  //   id: 'dashboard',
+  //   icon: Dashboard,
+  //   search: 'dashboard',
+  //   title: <FormattedMessage id="dashboard" />,
+  //   type: 'item',
+  //   url: '/admin/dashboard',
+  // },
+  // {
+  //   id: 'investors',
+  //   icon: TeamOutlined,
+  //   search: 'investors',
+  //   title: <FormattedMessage id="investors" />,
+  //   type: 'item',
+  //   url: '/admin/investors',
+  // },
+  // {
+  //   id: 'project-owners',
+  //   icon: UsergroupAddOutlined,
+  //   search: 'project-owners',
+  //   title: <FormattedMessage id="project-owners" />,
+  //   type: 'item',
+  //   url: '/admin/project-owners',
+  // },
+  // {
+  //   id: 'projects',
+  //   icon: Project,
+  //   search: 'projects',
+  //   title: <FormattedMessage id="projects" />,
+  //   type: 'item',
+  //   url: '/admin/projects',
+  // },
+  // {
+  //   id: 'kyc',
+  //   icon: DashboardOutlined,
+  //   search: 'kyc',
+  //   title: <FormattedMessage id="kyc" />,
+  //   type: 'item',
+  //   url: '/admin/kyc',
+  // },
+  // {
+  //   id: 'financial-transactions',
+  //   icon: Transaction,
+  //   search: 'financial-transactions',
+  //   title: <FormattedMessage id="financial-transactions" />,
+  //   type: 'item',
+  //   url: '/admin/financial-transactions',
+  // },
+  // {
+  //   id: 'wallet-transactions',
+  //   icon: Wallet,
+  //   search: 'wallet-transactions',
+  //   title: <FormattedMessage id="wallet-transactions" />,
+  //   type: 'item',
+  //   url: '/admin/wallet-transactions',
+  // },
+  // {
+  //   id: 'project-transactions',
+  //   icon: FileProtectOutlined,
+  //   search: 'project-transactions',
+  //   title: <FormattedMessage id="project-transactions" />,
+  //   type: 'item',
+  //   url: '/admin/project-transactions',
+  // },
+  // {
+  //   id: 'rewards',
+  //   icon: Reward,
+  //   search: 'rewards',
+  //   title: <FormattedMessage id="rewards" />,
+  //   type: 'item',
+  //   url: '/admin/rewards',
+  // },
+  // {
+  //   id: 'help',
+  //   icon: Help,
+  //   search: 'help',
+  //   title: <FormattedMessage id="help" />,
+  //   type: 'item',
+  //   url: '/admin/help',
+  // }
   // {
   //   id: 'referral',
   //   icon: DashboardOutlined,
@@ -188,17 +153,15 @@ const menuItems: NavItemType[] = [
   //   title: <FormattedMessage id="referral" />,
   //   type: 'item',
   //   url: '/admin/referral',
-  //   roles: [UserRole.ADMIN]
   // },
-  // {
-  //   id: 'settings',
-  //   icon: SettingOutlined,
-  //   search: 'settings',
-  //   title: <FormattedMessage id="settings" />,
-  //   type: 'item',
-  //   url: '/admin/settings',
-  //   roles: [UserRole.ADMIN]
-  // }
+  {
+    id: 'settings',
+    icon: SettingOutlined,
+    search: 'settings',
+    title: <FormattedMessage id="settings" />,
+    type: 'item',
+    url: '/',
+  }
 ];
 
 export default menuItems;

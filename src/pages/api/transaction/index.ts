@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (session && session.token.accessToken) {
     const { txType, page } = req.query;
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
-    console.log('query -->', `/api/v1/transaction/all?page=${page}&txType=${txType}`);
-    const response = await axios.get(`/api/v1/transaction/all?page=${page}&txType=${txType}`).catch((err) => {
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
+    console.log('query -->', `/api/transaction/all?page=${page}&txType=${txType}`);
+    const response = await axios.get(`/api/transaction/all?page=${page}&txType=${txType}`).catch((err) => {
       if (err && err.response) {
         res.status(err.response.status).json(err);
       }

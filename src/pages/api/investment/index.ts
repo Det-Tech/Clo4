@@ -6,10 +6,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getSession({ req });
 
   if (session && session.token.accessToken) {
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
-
-    const response = await axios.get(`/api/v1/invest`).catch((err) => {
-      console.log(err);
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
+    
+    const response = await axios.get(`/api/user/whoami`).catch((err) => {
+      console.log("err", response);
       if (err) {
         res.status(err.response.status).json({ error: err });
       }

@@ -19,7 +19,7 @@ import { CheckOutlined } from '@ant-design/icons';
 // types
 import { KeyedObject } from 'types/root';
 import { UserProfile } from 'types/user-profile';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 
 const chance = new Chance();
 
@@ -30,13 +30,13 @@ interface UserListProps {
 
 function UserList({ setUser, search }: UserListProps) {
   const theme = useTheme();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const dispatch = useDispatch();
   const [data, setData] = useState<UserProfile[]>([]);
   const { users } = useSelector((state) => state.chat);
 
   useEffect(() => {
-    if (session?.token.role !== 2) dispatch(getUsers());
+    dispatch(getUsers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -1,15 +1,14 @@
 import { getSession } from 'next-auth/react';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { UserRole } from 'types/auth';
 import axios from 'utils/axios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await await getSession({ req });
 
-  if (session && session.token.accessToken && session.token.role !== UserRole.ADMIN) {
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
+  if (session && session.token.accessToken) {
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
 
-    const response = await axios.get(`/api/v1/kyc/current`).catch((err) => {
+    const response = await axios.get(`/api/kyc/current`).catch((err) => {
       res.status(err.response.status).json({ error: err });
     });
 

@@ -4,7 +4,7 @@ import { SyntheticEvent, useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 // material-ui
-import { MenuItem, Select, SelectChangeEvent, Stack, Tab, Tabs } from '@mui/material';
+import { SelectChangeEvent, Stack, Tab, Tabs } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 // project imports
@@ -154,40 +154,45 @@ const Chart = ({ slot }: Props) => {
     ]);
   }, [slot]);
 
-  return <ReactApexChart options={options} series={series} type="area" height={355} />;
+  return <ReactApexChart options={options} series={series} type="area" height={230} />;
 };
 
 // ==============================|| STATISTICS CARD ||============================== //
 
 const StatisticsCard = () => {
   const [tabValue, setTabValue] = useState<number>(0);
+  // @ts-ignore
   const [filter, setFilter] = useState<number>(0);
 
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
+  // @ts-ignore
   const handleFilterChange = (event: SelectChangeEvent) => {
     setFilter(Number(event.target.value));
   };
 
   return (
-    <MainCard title="Statistics">
+    <MainCard title="Portfolio performance">
       <Stack direction="row" justifyContent="space-between">
         <Tabs value={tabValue} onChange={handleTabChange} aria-label="project owner dashboard statistics tabs">
-          <Tab label="Investors" {...a11yProps(0)} />
-          <Tab label="Projects" {...a11yProps(1)} />
+          <Tab label="1H" {...a11yProps(0)} />
+          <Tab label="1D" {...a11yProps(1)} />
+          <Tab label="3D" {...a11yProps(1)} />
+          <Tab label="1W" {...a11yProps(1)} />
+          <Tab label="1M" {...a11yProps(1)} />
         </Tabs>
-        <Select
+        {/* <Select
           value={filter.toString()}
           onChange={handleFilterChange}
           displayEmpty
-          inputProps={{ 'aria-label': 'Project Owner Statistics Filter' }}
+          inputProps={{ 'aria-label': 'Poftfolio  Filter' }}
         >
           <MenuItem value={0}>This Month</MenuItem>
           <MenuItem value={2}>This Year</MenuItem>
           <MenuItem value={3}>All</MenuItem>
-        </Select>
+        </Select> */}
       </Stack>
       <Chart slot="month" />
     </MainCard>

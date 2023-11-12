@@ -124,9 +124,9 @@ export default function ShipDetailForm({ shipDetail, setShipDetail, handleNext }
       formData.append('flag', String(shipDetail.flag));
       formData.append('estimatedEarning', String(shipDetail.estimatedEarning));
 
-      axios.defaults.headers.common = { Authorization: `bearer ${session?.token.accessToken as string}` };
+      axios.defaults.headers.common = { Authorization: `${session?.token.accessToken as string}` };
       axios
-        .post(`/api/v1/project/register`, formData)
+        .post(`/api/project/register`, formData)
         .then(async (res) => {
           shipDetail.id = res.data._id;
           setShipDetail(shipDetail);

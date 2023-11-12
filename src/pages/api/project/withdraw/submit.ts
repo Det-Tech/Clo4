@@ -8,9 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (session && session.token.accessToken) {
     const { projectId, status } = req.query;
 
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
 
-    const response = await axios.post('/api/v1/project/withdraw/submit', { projectId, status }).catch((err) => {
+    const response = await axios.post('/api/project/withdraw/submit', { projectId, status }).catch((err) => {
       if (err && err.response) {
         res.status(err.response.status).json(err);
       }

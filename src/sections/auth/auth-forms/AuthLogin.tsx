@@ -96,7 +96,8 @@ const AuthLogin = ({ providers, csrfToken }: any) => {
                   setSubmitting(false);
                 }
               } else {
-                router.push('/verify-otp');
+                // router.push('/verify-otp');
+                router.push('/');
               }
             });
           } else {

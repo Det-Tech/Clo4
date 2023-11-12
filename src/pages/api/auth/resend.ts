@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getSession({ req });
 
   if (session) {
-    const response = await axios.post(`/api/v1/user/re-send/otp-verification`, { email: session.token.email }).catch((err) => {
+    const response = await axios.post(`/api/user/re-send/otp-verification`, { email: session.token.email }).catch((err) => {
       console.log(err);
       if (err) {
         console.log(err.response.data);

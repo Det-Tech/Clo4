@@ -16,7 +16,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen
   }),
   overflowX: 'hidden',
-  boxShadow: theme.palette.mode === ThemeMode.DARK ? theme.customShadows.z1 : 'none'
+  boxShadow: theme.palette.mode === ThemeMode.DARK ? theme.customShadows.z1 : 'none',
+  borderRadius: "20px",
+  background: "#00A47875",
 });
 
 // const closedMixin = (theme: Theme): CSSObject => ({

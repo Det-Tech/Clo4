@@ -56,10 +56,9 @@ const Navigation = () => {
       icon: item.icon
     }));
   }
-
   const navGroups = menuItems.items
     .slice(0, lastItemIndex + 1)
-    .filter((item) => user && item.roles?.includes(user.role))
+    .filter((item) => user)
     .map((item, index) => {
       switch (item.type) {
         case 'group':

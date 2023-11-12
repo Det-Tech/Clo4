@@ -9,7 +9,7 @@ axiosServices.interceptors.request.use(
   async (config) => {
     const session = await getSession();
     if (session?.token.accessToken) {
-      config.headers['Authorization'] = `Bearer ${session?.token.accessToken}`;
+      config.headers['Authorization'] = `${session?.token.accessToken}`;
     }
     return config;
   },

@@ -162,9 +162,9 @@ export default function DocumentsForm({ documents, setDocuments, handleNext, pro
       formData.append('vesselCertificate', shipDocuments.vesselCertificate as any);
       console.log(projectId);
       setDocuments(shipDocuments);
-      axios.defaults.headers.common = { Authorization: `bearer ${session?.token.accessToken as string}` };
+      axios.defaults.headers.common = { Authorization: `${session?.token.accessToken as string}` };
       axios
-        .post(`/api/v1/project/${projectId}/documents`, formData)
+        .post(`/api/project/${projectId}/documents`, formData)
         .then(async (res) => {
           handleNext();
           enqueueSnackbar('Documents successfully uploaded.', {

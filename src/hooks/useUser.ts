@@ -19,7 +19,7 @@ const useUser = () => {
       email: user.email || 'Unknown',
       avatar: '/assets/images/users/avatar-1.png',
       thumb: '/assets/images/users/avatar-thumb-1.png',
-      role: user.role
+      role: user?.role
     };
 
     return newUser;

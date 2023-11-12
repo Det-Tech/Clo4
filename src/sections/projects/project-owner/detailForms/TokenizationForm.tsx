@@ -87,10 +87,10 @@ export default function TokenizationForm({ tokenization, setTokenization, projec
         minimumInvestment: values.minimumInvestment
       };
 
-      axios.defaults.headers.common = { Authorization: `bearer ${session?.token.accessToken as string}` };
+      axios.defaults.headers.common = { Authorization: `${session?.token.accessToken as string}` };
 
       axios
-        .post(`/api/v1/project/${projectId}/tokenization`, tokenInfo)
+        .post(`/api/project/${projectId}/tokenization`, tokenInfo)
         .then(async (res) => {
           enqueueSnackbar('Tokenized successfully.', {
             variant: 'success',

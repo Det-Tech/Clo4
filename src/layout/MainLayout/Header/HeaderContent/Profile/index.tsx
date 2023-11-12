@@ -6,7 +6,20 @@ import { signOut } from 'next-auth/react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, ButtonBase, capitalize, ClickAwayListener, Grid, Paper, Popper, Stack, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  ButtonBase,
+  capitalize,
+  CardHeader,
+  CardMedia,
+  ClickAwayListener,
+  Grid,
+  Paper,
+  Popper,
+  Stack,
+  Tooltip,
+  Typography
+} from '@mui/material';
 
 // project import
 import Avatar from 'components/@extended/Avatar';
@@ -22,6 +35,7 @@ import { ThemeMode } from 'types/config';
 import { LogoutOutlined } from '@ant-design/icons';
 
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
+const nofitication = 'assets/images/component/notification.png';
 
 const Profile = () => {
   const theme = useTheme();
@@ -54,7 +68,7 @@ const Profile = () => {
     <Box>
       <ButtonBase
         sx={{
-          p: 0.25,
+          width: '100%',
           border: '1px solid transparent',
           background:
             theme.palette.mode === ThemeMode.DARK
@@ -62,10 +76,9 @@ const Profile = () => {
               : '#2A68DF',
           borderRadius: '8px',
           my: 2,
-          mx: 2,
-          width: '228px',
-          px: 1.5,
-          py: 2,
+          ml: 0.5,
+          px: 1,
+          py: 0.5,
           justifyContent: 'start',
           '&:hover': { bgcolor: theme.palette.mode === ThemeMode.DARK ? 'divider' : 'primary.lighter' },
           '&:focus-visible': {
@@ -80,21 +93,26 @@ const Profile = () => {
         onClick={handleToggle}
       >
         {user && (
-          <Stack direction="row" spacing={1.5} alignItems="center" sx={{ p: 0.25, px: 0.75 }}>
-            <Avatar alt={user.name} src={user.avatar} sx={{ width: 30, height: 30 }} />
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            sx={{ p: 0.25, px: 0.75, width: '100%', justifyContent: 'space-between' }}
+          >
             <Box>
-              <Typography variant="subtitle1" sx={{ color: 'white' }} textAlign="left">
-                {user.name && capitalize(user.name)}
-              </Typography>
-              <Typography noWrap maxWidth={140} sx={{ color: 'white' }} variant="body2" textAlign="left">
-                {user.email && user.email}
-              </Typography>
+              <CardHeader
+                sx={{ marginLeft: '-10px' }}
+                titleTypographyProps={{ variant: 'subtitle1' }}
+                title={<Typography variant="h5">Hi, {user.name && capitalize(user.name)}</Typography>}
+              />
+              <CardMedia component="img" image={nofitication} sx={{ width: 30 }} />
             </Box>
+            <Avatar alt={user.name} src={user.avatar} sx={{ width: 50, height: 50 }} />
           </Stack>
         )}
       </ButtonBase>
       <Popper
-        placement="top-end"
+        placement="bottom-end"
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
@@ -157,6 +175,56 @@ const Profile = () => {
           </Transitions>
         )}
       </Popper>
+
+      <Stack
+        direction="row"
+        spacing={1.5}
+        alignItems="center"
+        sx={{
+          width: '100%',
+          border: '1px solid transparent',
+          background:
+            theme.palette.mode === ThemeMode.DARK
+              ? 'radial-gradient(117.73% 99.50% at 8.37% 0.00%, rgba(70, 70, 70) 0%, #141718 100%) padding-box, linear-gradient(160deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.11) 50%, rgba(255, 255, 255, 0.11) 60%, #8470FF80) border-box'
+              : '#85E0A3',
+          borderRadius: '8px',
+          mx: 2,
+          ml: 0.5,
+          px: 1.5,
+          py: 2,
+          '&:hover': { bgcolor: theme.palette.mode === ThemeMode.DARK ? 'divider' : 'primary.lighter' },
+          '&:focus-visible': {
+            outline: `2px solid ${theme.palette.secondary.dark}`,
+            outlineOffset: 2
+          },
+          justifyContent: 'space-between'
+        }}
+      >
+        <Box>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            Net workth:
+          </Typography>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            {'$100, 000, 000'}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            Available:
+          </Typography>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            {'$100, 000, 000'}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            Staked:
+          </Typography>
+          <Typography variant="h6" sx={{ color: 'white', fontSize: '11px' }} textAlign="left">
+            {'$100, 000, 000'}
+          </Typography>
+        </Box>
+      </Stack>
     </Box>
   );
 };

@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (session && session.token.accessToken) {
     const { allowance } = req.query;
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
 
-    const response = await axios.get(`/api/v1/project/all${allowance ? `?allowance=${allowance}` : ''}`).catch((err) => {
+    const response = await axios.get(`/api/project/all${allowance ? `?allowance=${allowance}` : ''}`).catch((err) => {
       if (err && err.response) {
         res.status(err.response.status).json(err);
       }

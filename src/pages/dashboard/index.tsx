@@ -1,16 +1,12 @@
 import { ReactElement } from 'react';
 
-// material-ui
-
 // project import
 import Layout from 'layout';
 import Page from 'components/Page';
-import DashboardInvestorSection from 'sections/dashboard/investor/DashboardInvestorSection';
-import DashboardProjectOwnerSection from 'sections/dashboard/project-owner/DashboardProjectOwnerSection';
+import DashboardSection from 'sections/dashboard/DashboardSection';
 import useUser from 'hooks/useUser';
 
 // types
-import { UserRole } from 'types/auth';
 
 // assets
 
@@ -23,8 +19,8 @@ const Dashboard = () => {
     <Page title="Dashboard">
       {user && (
         <>
-          {user.role === UserRole.INVESTOR && <DashboardInvestorSection />}
-          {user.role === UserRole.PROJECT_OWNER && <DashboardProjectOwnerSection />}
+          <DashboardSection />
+          {/* <DashboardProjectOwnerSection /> */}
         </>
       )}
     </Page>

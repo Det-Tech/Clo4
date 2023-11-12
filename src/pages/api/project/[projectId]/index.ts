@@ -8,9 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (session && session.token.accessToken) {
     const { projectId } = req.query;
 
-    axios.defaults.headers.common = { Authorization: `bearer ${session.token.accessToken as string}` };
+    axios.defaults.headers.common = { Authorization: `${session.token.accessToken as string}` };
 
-    const response = await axios.get(`/api/v1/project/${projectId}`).catch((err) => {
+    const response = await axios.get(`/api/project/${projectId}`).catch((err) => {
       console.log(err);
       if (err) {
         res.status(err.response.status).json({ error: err });

@@ -2,7 +2,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { UserRole } from 'types/auth';
 
 // third-party
 import axios from 'utils/axios';
@@ -31,16 +30,23 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await axios.post('/api/v1/user/login', {
+          const res = await axios.post('/api/user/login', {
             password: credentials?.password,
             email: credentials?.email
           });
 
-          if (res.data && res.data.msg === 'Email verification has sent to your email') {
-            throw new Error('email not verified');
-          }
+          // if (res.data && res.data.msg === 'Email verification has sent to your email') {
+          //   throw new Error('email not verified');
+          // }
+          return {
+            id: '',
+            email: credentials?.email,
+            accessToken: res.data?.token,
+            fullName: res.data?.username,
+            wallet: res.data?.wallet,
+            walletData: res.data?.walletData,
+          };
 
-          return { email: credentials?.email, id: '' };
         } catch (error: any) {
           throw new Error('Invalid Email or Password');
         }
@@ -53,22 +59,20 @@ export const authOptions: NextAuthOptions = {
         firstName: { label: 'First Name', type: 'text', placeholder: 'Enter First Name' },
         lastName: { label: 'Last Name', type: 'text', placeholder: 'Enter Last Name' },
         email: { label: 'Email', type: 'text', placeholder: 'Enter Email' },
-        phoneNumber: { label: 'Phone Number', type: 'text', placeholder: 'Enter Phone Number' },
         password: { label: 'Password', type: 'password', placeholder: 'Enter Password' },
-        referralCode: { label: 'Referral Code', type: 'password', placeholder: 'Enter Referral Code' },
-        role: { label: 'Role', type: 'text', placeholder: 'Enter Role' }
+        wallet: { label: 'wallet', type: 'text', placeholder: '' },
+        walletData: { label: 'walletData', type: 'text', placeholder: '' }
       },
       async authorize(credentials) {
         try {
-          const user = await axios.post('/api/v1/user/register', {
-            firstName: credentials?.firstName,
-            lastName: credentials?.lastName,
+          const user = await axios.post('/api/user/register', {
+            username: credentials?.firstName + ' ' + credentials?.lastName,
             email: credentials?.email,
-            phoneNumber: credentials?.phoneNumber,
             password: credentials?.password,
-            referralCode: credentials?.referralCode,
-            role: credentials?.role
+            wallet: credentials?.wallet,
+            wallet_data: credentials?.walletData,
           });
+
           return {
             id: user.data._id,
             email: user.data.email
@@ -76,7 +80,7 @@ export const authOptions: NextAuthOptions = {
         } catch (error: any) {
           var errors;
           if (error.response.data) {
-            errors = JSON.stringify(error.response.data);
+            errors = JSON.stringify(error.response.data.message);
           } else {
             errors = JSON.stringify({ submit: error.message });
           }
@@ -93,7 +97,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const user = await axios.post('/api/v1/user/verify-otp', {
+          const user = await axios.post('/api/user/verify-otp', {
             email: credentials?.email,
             otp: credentials?.otp
           });
@@ -101,17 +105,14 @@ export const authOptions: NextAuthOptions = {
             id: '',
             email: credentials?.email,
             accessToken: user.data.token,
-            fullName: user.data.fullName,
-            role:
-              user.data.role === 'investor' ? UserRole.INVESTOR : user.data.role === 'prowner' ? UserRole.PROJECT_OWNER : UserRole.ADMIN,
-            kycStatus: user.data.kycStatus,
-            walletAddress: user.data.walletAddress,
-            cusId: user.data.cus_id
+            fullName: user.data.username,
+            walletAddress: user.data.wallet,
+            walletData: user.data.walletData
           };
         } catch (error: any) {
           var errors;
           if (error.response.data) {
-            errors = JSON.stringify(error.response.data.msg);
+            errors = JSON.stringify(error.response.data.message);
           } else {
             errors = JSON.stringify(error.message);
           }
@@ -129,14 +130,12 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
       }
-      if (account?.provider === 'verifyOtp' && user) {
+      if (account?.provider === 'signin' && user) {
         token.email = user.email;
         token.accessToken = (user as any).accessToken;
         token.fullName = (user as any).fullName;
-        token.role = (user as any).role;
-        token.kycStatus = (user as any).kycStatus;
-        token.walletAddress = (user as any).walletAddress;
-        token.cusId = (user as any).cusId;
+        token.walletAddress = (user as any)?.wallet;
+        token.walletData = (user as any)?.walletData;
       }
       return token;
     },

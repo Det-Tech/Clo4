@@ -13,22 +13,24 @@ const musdContract = new web3.eth.Contract(Clo4_ABI as any[], '0xe2B4A37D165Aec2
 export const useCurrentBalance = () => {
   const { data: session } = useSession();
   const [balance, setBalance] = useState<number>(0);
+  // @ts-ignore
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const refresh = useCallback(() => {
     if (session && web3 && musdContract) {
-      setLoading(true);
-      musdContract.methods
-        .balanceOf(session.token.walletAddress)
-        .call({ from: web3.utils.toChecksumAddress('0x000000000000000000000000000000000000abcd') })
-        .then((res: string) => {
-          setBalance(Number(web3.utils.fromWei(res, 'ether')));
-          setLoading(false);
-        })
-        .catch((err: any) => {
-          console.log(err);
-          setLoading(false);
-        });
+      // setLoading(true);
+      setBalance(Number(web3.utils.fromWei("50000000000000000000", 'ether')));
+      // musdContract.methods
+      //   .balanceOf(session.token.walletAddress)
+      //   .call({ from: web3.utils.toChecksumAddress('0x000000000000000000000000000000000000abcd') })
+      //   .then((res: string) => {
+      //     setBalance(Number(web3.utils.fromWei(res, 'ether')));
+      //     setLoading(false);
+      //   })
+      //   .catch((err: any) => {
+      //     console.log(err);
+      //     setLoading(false);
+      //   });
     }
   }, [session]);
 

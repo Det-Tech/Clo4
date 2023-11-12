@@ -15,7 +15,7 @@ const InvestmentsCard = () => {
     fetch('/api/investment').then(async (res) => {
       if (res.status === 200) {
         const { total } = await res.json();
-        setCurrentValue(total.investment);
+        setCurrentValue(total?.investment);
       }
     });
   }, []);
