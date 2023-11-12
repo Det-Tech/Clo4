@@ -32,6 +32,9 @@ import Notistack from 'components/third-party/Notistack';
 import { ConfigProvider } from 'contexts/ConfigContext';
 import { store, persister } from 'store';
 
+import { ThirdwebProvider, localWallet, smartWallet } from '@thirdweb-dev/react';
+import { Goerli } from "@thirdweb-dev/chains";
+
 // types
 type LayoutProps = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -43,6 +46,16 @@ interface Props {
 }
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
+
+export const activeChain = Goerli;
+
+export const smartWalletConfig = smartWallet(localWallet(), {
+  factoryAddress: "0x8e0ebeb0d60dfc644e145790e1fac9b01c9a82cd",
+  gasless: true,
+  // thirdwebApiKey: process.env.THIRDWEB_CLIENTID,
+  // personalWallets: [metamaskWallet(), localWallet({ persist: true })],
+});
+
 
 export default function App({ Component, pageProps }: AppProps & Props) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
@@ -56,27 +69,29 @@ export default function App({ Component, pageProps }: AppProps & Props) {
   if (loading) return <Loader />;
 
   return (
-    <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persister}>
-        <ConfigProvider>
-          <ThemeCustomization>
-            <RTLLayout>
-              <Locales>
-                <ScrollTop>
-                  <SessionProvider session={pageProps.session} refetchInterval={0}>
-                    <>
-                      <Notistack>
-                        <Snackbar />
-                        {getLayout(<Component {...pageProps} />)}
-                      </Notistack>
-                    </>
-                  </SessionProvider>
-                </ScrollTop>
-              </Locales>
-            </RTLLayout>
-          </ThemeCustomization>
-        </ConfigProvider>
-      </PersistGate>
-    </ReduxProvider>
+    <ThirdwebProvider clientId={process.env.THIRDWEB_CLIENTID} activeChain={activeChain} supportedWallets={[smartWalletConfig]}>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persister}>
+          <ConfigProvider>
+            <ThemeCustomization>
+              <RTLLayout>
+                <Locales>
+                  <ScrollTop>
+                    <SessionProvider session={pageProps.session} refetchInterval={0}>
+                      <>
+                        <Notistack>
+                          <Snackbar />
+                          {getLayout(<Component {...pageProps} />)}
+                        </Notistack>
+                      </>
+                    </SessionProvider>
+                  </ScrollTop>
+                </Locales>
+              </RTLLayout>
+            </ThemeCustomization>
+          </ConfigProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </ThirdwebProvider>
   );
 }

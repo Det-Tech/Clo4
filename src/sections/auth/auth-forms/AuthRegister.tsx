@@ -33,14 +33,43 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
+// thirdweb
+import { Goerli } from "@thirdweb-dev/chains";
+import {
+  useConnect,
+} from "@thirdweb-dev/react";
+import { LocalWallet } from "@thirdweb-dev/wallets";
+import { smartWalletConfig } from "./../../../pages/_app";
+
 const Google = '/assets/images/icons/google.svg';
 const Twitter = '/assets/images/icons/twitter.svg';
 
 // ============================|| SIGN UP ||============================ //
 
 const AuthRegister = ({ providers, csrfToken }: any) => {
-
+  const connect = useConnect();
   const router = useRouter();
+
+  const loadLocalWalletAndConnect = async () => {
+    try {
+      const personalWallet = new LocalWallet({
+        chain: Goerli,
+      });
+
+      await personalWallet.loadOrCreate({
+        strategy: "encryptedJson",
+        password: "password",
+      });
+      await connect(smartWalletConfig, {
+        personalWallet: personalWallet,
+      });
+      
+      console.log("smartWalletConfig");
+      return {walletData: localStorage.getItem("__TW__/localWallet/localWalletData")}
+    } catch (e) {
+      console.log(e)
+    }
+  };
 
   // const matchDownSM = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const [showPassword, setShowPassword] = React.useState(false);
@@ -85,29 +114,32 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
             .when(['password'], (password, schema) => schema.equals(password, 'The two passwords that you entered do not match!'))
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
-            signIn('signup', {
-              redirect: false,
-              firstName: values.firstName,
-              lastName: values.lastName,
-              email: values.email,
-              password: values.password,
-            }).then((res: any) => {
-              if (res?.error) {
-                try {
-                  const mappedErrors: any[] = JSON.parse(res.error);
-                  const errors: any = {};
-                  mappedErrors.forEach((error) => (errors[error.path[0]] = error.message));
-                  setErrors({ ...errors });
+            loadLocalWalletAndConnect().then((data: any) =>{
+              signIn('signup', {
+                redirect: false,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: values.password,
+                walletData: data?.walletData
+              }).then((res: any) => {
+                if (res?.error) {
+                  try {
+                    const mappedErrors: any[] = JSON.parse(res.error);
+                    const errors: any = {};
+                    mappedErrors.forEach((error) => (errors[error.path[0]] = error.message));
+                    setErrors({ ...errors });
+                    setSubmitting(false);
+                  } catch (e) {
+                    setErrors({ submit: res.error });
+                    setSubmitting(false);
+                  }
+                } else {
                   setSubmitting(false);
-                } catch (e) {
-                  setErrors({ submit: res.error });
-                  setSubmitting(false);
+                  router.push('/verify-email');
                 }
-              } else {
-                setSubmitting(false);
-                router.push('/verify-email');
-              }
-            });
+              });
+            }).catch(err=>{});
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values, setFieldValue }) => (
