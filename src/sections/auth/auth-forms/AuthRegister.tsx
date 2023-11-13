@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // next
 import NextLink from 'next/link';
@@ -36,6 +36,7 @@ import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 // thirdweb
 import { Goerli } from "@thirdweb-dev/chains";
 import {
+  useAddress,
   useConnect,
 } from "@thirdweb-dev/react";
 import { LocalWallet } from "@thirdweb-dev/wallets";
@@ -46,9 +47,12 @@ const Twitter = '/assets/images/icons/twitter.svg';
 
 // ============================|| SIGN UP ||============================ //
 
+let wallet_address = "";
+
 const AuthRegister = ({ providers, csrfToken }: any) => {
   const connect = useConnect();
   const router = useRouter();
+  const address = useAddress();
 
   const loadLocalWalletAndConnect = async () => {
     try {
@@ -89,6 +93,16 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
     event.preventDefault();
   };
 
+  const delay = (milliseconds: any) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  }
+
+  useEffect(()=>{
+    if(address){
+      wallet_address = address;
+    }
+  }, [address])
+
   return (
     <>
       <Formik
@@ -114,14 +128,16 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
             .when(['password'], (password, schema) => schema.equals(password, 'The two passwords that you entered do not match!'))
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
-            loadLocalWalletAndConnect().then((data: any) =>{
+            loadLocalWalletAndConnect().then(async(data: any) =>{
+              await delay(1000);
               signIn('signup', {
                 redirect: false,
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
                 password: values.password,
-                walletData: data?.walletData
+                walletData: data?.walletData,
+                wallet: wallet_address
               }).then((res: any) => {
                 if (res?.error) {
                   try {
@@ -138,7 +154,8 @@ const AuthRegister = ({ providers, csrfToken }: any) => {
                   setSubmitting(false);
                   router.push('/verify-email');
                 }
-              });
+              })
+              
             }).catch(err=>{});
         }}
       >

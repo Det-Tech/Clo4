@@ -1,7 +1,6 @@
-import { forwardRef, useEffect, ForwardRefExoticComponent, RefAttributes } from 'react';
+import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 // next
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 
 // material-ui
@@ -70,8 +69,6 @@ const NavItem = ({ item, level }: Props) => {
   const itemIcon = item.icon ? <Icon style={{ fontSize: '1rem' }} /> : false;
 
   const isSelected = openItem.findIndex((id) => id === item.id) > -1;
-
-  const router = useRouter();
 
   const textColor = theme.palette.mode === ThemeMode.DARK ? 'grey.400' : 'text.primary';
   const iconSelectedColor = '#FEFEFE';
