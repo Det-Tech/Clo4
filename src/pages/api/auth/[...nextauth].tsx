@@ -137,9 +137,11 @@ export const authOptions: NextAuthOptions = {
         token.walletAddress = (user as any)?.wallet;
         token.walletData = (user as any)?.walletData;
       }
+      console.log("token:", token)
       return token;
     },
     session: ({ session, token }) => {
+      console.log("session token:", token)
       if (token) {
         session.token = token;
       }
