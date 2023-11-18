@@ -7,5 +7,6 @@ module.exports = {
     STRIPE_SECKEY: "sk_test_51O2pevERVjC7tdMD2IJxnY7tXhIX6ZAcCW0MdGorg2ag4ysFqUB50Zubk2Us1d8Br641o934LTFYZskWF85sSxS400fGwOMn2u",
     STRIPE_CLIENT_ID: "ca_OqWkvDpteTcM9DwiBqq4klkBng9NEpQO",
     FRONTEND_URL: "https://clo4.vercel.app",
+    WEBTHIRD_SECRET: "ZaocfXjMaPWIyYASNplo97-LMTirJRcN9ZAn39yJJoyMbZpywFzs1yEcbsfKfHWdiMm4KAZ6tKXctMi6gLtnEg"
 };
   
